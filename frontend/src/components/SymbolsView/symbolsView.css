@@ -10,6 +10,10 @@
 
 .symbolsView__content__cards {
   width: calc(100% - 400px);
+  height: calc(100vh - 250px);
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @media (max-width: 1023px) {
@@ -18,6 +22,7 @@
   }
 
   .symbolsView__content__chart {
+    width: 100%;
     padding: 0px 20px;
     order: 1;
   }
@@ -25,5 +30,14 @@
   .symbolsView__content__cards {
     width: 100%;
     order: 2;
+    height: calc(100vh - 365px);
+  }
+}
+
+@media (max-width: 767px) {
+  .symbolsView__content__cards {
+    width: 100%;
+    order: 2;
+    height: calc(100vh - 350px);
   }
 }
