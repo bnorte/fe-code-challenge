@@ -7,13 +7,13 @@
 
 .symbolCard__selected {
   box-shadow: 0 0 15px var(--colorDark);
-  transform: scaleY(1.05);
-  width: calc(95% + 9px);
+  transform: scaleY(1.03);
+  width: calc(95% + 7px);
 }
 
 .symbolCard__notSelected {
-  transform: scaleY(0.95);
-  width: calc(95% - 9px);
+  transform: scaleY(0.97);
+  width: calc(95% - 7px);
 }
 
 .symbolCard__priceIncrease {
@@ -54,7 +54,7 @@
   justify-content: space-between;
   align-items: end;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   font-size: 14px;
 }
 

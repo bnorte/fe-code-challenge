@@ -9,7 +9,11 @@ import UpArrowImg from '@/assets/up.png';
 import DownArrowImg from '@/assets/down.png';
 import ListItem from '@/components/ListItem';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { selectActiveSymbol, updateActiveSymbol } from '@/store/dashboardOptionsSlice';
+import {
+  selectActiveSymbol,
+  selectShowCardInfo,
+  updateActiveSymbol
+} from '@/store/dashboardOptionsSlice';
 import { formatMoney } from '@/utils/formatters';
 
 type SymbolCardProps = {
@@ -24,6 +28,7 @@ const SymbolCard = ({ id, price }: SymbolCardProps) => {
     (state) => state.stocks.entities[id]
   );
   const activeSymbol = useAppSelector(selectActiveSymbol);
+  const showCardInfo = useAppSelector(selectShowCardInfo);
 
   const handleOnClick = () => {
     dispatch(updateActiveSymbol(activeSymbol === id ? null : id));
@@ -49,11 +54,15 @@ const SymbolCard = ({ id, price }: SymbolCardProps) => {
       <div className="symbolCard__details">
         <div className="symbolCard__details__price">
           <div>PRICE:</div>
-          <div className="symbolCard__details__price__value">{price || '--'} </div>
+          <div className="symbolCard__details__price__value">{price ? `$${price}` : '$70'} </div>
         </div>
-        <ListItem Icon={<CompanyIcon />} label={companyName} />
-        <ListItem Icon={<IndustryIcon />} label={industry} />
-        <ListItem Icon={<MarketCapIcon />} label={`$${formatMoney(marketCap)}`} />
+        {showCardInfo && (
+          <>
+            <ListItem Icon={<CompanyIcon />} label={companyName} />
+            <ListItem Icon={<IndustryIcon />} label={industry} />
+            <ListItem Icon={<MarketCapIcon />} label={`$${formatMoney(marketCap)}`} />
+          </>
+        )}
       </div>
     </div>
   );
