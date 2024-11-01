@@ -1,0 +1,29 @@
+.symbolsView__content {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+}
+
+.symbolsView__content__chart {
+  width: 400px;
+}
+
+.symbolsView__content__cards {
+  width: calc(100% - 400px);
+}
+
+@media (max-width: 1023px) {
+  .symbolsView__content {
+    flex-direction: column;
+  }
+
+  .symbolsView__content__chart {
+    padding: 0px 20px;
+    order: 1;
+  }
+
+  .symbolsView__content__cards {
+    width: 100%;
+    order: 2;
+  }
+}

@@ -1,7 +1,66 @@
 .symbolCard {
-  border: 2px solid black; /* just for visibility, feel free to remove it */
-  margin: 10px; /* just for visibility, feel free to remove it */
-  padding: 10px; /* just for visibility, feel free to remove it */
+  border-radius: 5px;
+  align-self: center;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.symbolCard__selected {
+  box-shadow: 0 0 15px var(--colorDark);
+  transform: scaleY(1.05);
+  width: calc(95% + 9px);
+}
+
+.symbolCard__notSelected {
+  transform: scaleY(0.95);
+  width: calc(95% - 9px);
+}
+
+.symbolCard__priceIncrease {
+  box-shadow: 0 0 15px #7fd47f;
+}
+
+.symbolCard__priceIncrease {
+  box-shadow: 0 0 15px #d6656e;
+}
+
+.symbolCard__alert {
+  animation: shake 0.5s;
+}
+
+.symbolCard__header {
+  background-color: #0f1120;
+  border-radius: 5px 5px 0px 0px;
+  color: var(--colorWhite);
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.symbolCard__header img {
+  height: 35px;
+  margin-right: -30px;
+  margin-top: -18px;
+}
+
+.symbolCard__details {
+  background-color: var(--colorWhite);
+  padding: 5px;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.symbolCard__details__price {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.symbolCard__details__price__value {
+  font-size: 26px;
+  font-weight: 700;
 }
 
 .symbolCard__shake {
