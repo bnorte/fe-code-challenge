@@ -1,11 +1,70 @@
 .symbolCard {
-  border: 2px solid black; /* just for visibility, feel free to remove it */
-  margin: 10px; /* just for visibility, feel free to remove it */
-  padding: 10px; /* just for visibility, feel free to remove it */
+  border-radius: 5px;
+  align-self: center;
+  margin: 0 auto;
+  width: 95%;
 }
 
-.symbolCard__shake {
-  animation: shake 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+.symbolCard__selected {
+  box-shadow: 0 0 15px var(--colorDark);
+  transform: scaleY(1.03);
+  width: calc(95% + 7px);
+}
+
+.symbolCard__notSelected {
+  transform: scaleY(0.97);
+  width: calc(95% - 7px);
+}
+
+.symbolCard__priceIncrease {
+  animation: priceIncreaseFlash 2s;
+}
+
+.symbolCard__priceDecrease {
+  animation: priceDecreaseFlash 2s;
+}
+
+.symbolCard__shakePriceIncrease {
+  animation: priceIncreaseFlash 2s, shake 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.symbolCard__shakePriceDecrease {
+  animation: priceDecreaseFlash 2s, shake 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.symbolCard__header {
+  background-color: #0f1120;
+  border-radius: 5px 5px 0px 0px;
+  color: var(--colorWhite);
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.symbolCard__header img {
+  height: 35px;
+  margin-right: -30px;
+  margin-top: -18px;
+}
+
+.symbolCard__details {
+  background-color: var(--colorWhite);
+  padding: 5px;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.symbolCard__details__price {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  font-weight: 600;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.symbolCard__details__price__value {
+  font-size: 26px;
+  font-weight: 700;
 }
 
 @keyframes shake {
@@ -34,5 +93,17 @@
   60%,
   70% {
     transform: translateX(6px);
+  }
+}
+
+@keyframes priceIncreaseFlash {
+  0% {
+    box-shadow: 0 0 20px 4px #4d9c4d;
+  }
+}
+
+@keyframes priceDecreaseFlash {
+  0% {
+    box-shadow: 0 0 20px 4px #e04f5b;
   }
 }
