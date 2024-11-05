@@ -7,6 +7,7 @@ import './symbolsGrid.css';
 const SymbolsGrid = () => {
   const stockSymbols = useAppSelector(selectors.selectStockIds);
   const prices = useAppSelector((state) => state.prices);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -16,7 +17,12 @@ const SymbolsGrid = () => {
   return (
     <div className="symbolsGrid">
       {stockSymbols.map((id, i) => (
-        <SymbolCard price={prices[id]} key={i} id={id} />
+        <SymbolCard
+          price={prices[id]?.price}
+          previousPrice={prices[id]?.previousPrice}
+          key={i}
+          id={id}
+        />
       ))}
     </div>
   );

@@ -17,15 +17,19 @@
 }
 
 .symbolCard__priceIncrease {
-  box-shadow: 0 0 15px #7fd47f;
+  animation: priceIncreaseFlash 2s;
 }
 
-.symbolCard__priceIncrease {
-  box-shadow: 0 0 15px #d6656e;
+.symbolCard__priceDecrease {
+  animation: priceDecreaseFlash 2s;
 }
 
-.symbolCard__alert {
-  animation: shake 0.5s;
+.symbolCard__shakePriceIncrease {
+  animation: priceIncreaseFlash 2s, shake 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.symbolCard__shakePriceDecrease {
+  animation: priceDecreaseFlash 2s, shake 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .symbolCard__header {
@@ -63,10 +67,6 @@
   font-weight: 700;
 }
 
-.symbolCard__shake {
-  animation: shake 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
 @keyframes shake {
   10%,
   90% {
@@ -93,5 +93,17 @@
   60%,
   70% {
     transform: translateX(6px);
+  }
+}
+
+@keyframes priceIncreaseFlash {
+  0% {
+    box-shadow: 0 0 20px 4px #4d9c4d;
+  }
+}
+
+@keyframes priceDecreaseFlash {
+  0% {
+    box-shadow: 0 0 20px 4px #e04f5b;
   }
 }

@@ -8,10 +8,18 @@ interface Item {
 
 const pricesSlice = createSlice({
   name: 'prices',
-  initialState: {} as { [key: string]: number },
+  initialState: {} as {
+    [key: string]: {
+      price: number;
+      previousPrice: number;
+    };
+  },
   reducers: {
     updatePrice: (state, action: PayloadAction<Item>) => {
-      state[action.payload.id] = action.payload.price;
+      state[action.payload.id] = {
+        price: action.payload.price,
+        previousPrice: state[action.payload.id]?.price
+      };
     }
   }
 });

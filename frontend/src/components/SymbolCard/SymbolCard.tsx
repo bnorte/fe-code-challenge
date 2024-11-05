@@ -19,9 +19,10 @@ import { formatMoney } from '@/utils/formatters';
 type SymbolCardProps = {
   id: string;
   price: number;
+  previousPrice: number;
 };
 
-const SymbolCard = ({ id, price }: SymbolCardProps) => {
+const SymbolCard = ({ id, price, previousPrice }: SymbolCardProps) => {
   const dispatch = useAppDispatch();
 
   const { trend, companyName, industry, marketCap } = useAppSelector(
@@ -39,14 +40,33 @@ const SymbolCard = ({ id, price }: SymbolCardProps) => {
     if (trend === 'DOWN') return DownArrowImg;
   }, [trend]);
 
+  const formattedPrice = useMemo(() => {
+    const roundedToUnitsPrice = Number(price?.toFixed(0));
+
+    if (roundedToUnitsPrice >= 10) {
+      return roundedToUnitsPrice;
+    } else {
+      return price?.toFixed(1);
+    }
+  }, [price]);
+
+  const isBigPriceVariation = useMemo(() => {
+    return previousPrice && Math.abs((price - previousPrice) / previousPrice) >= 0.25;
+  }, [price, previousPrice]);
+
+  const symbolCardClasses = useMemo(() => {
+    return classNames('symbolCard', {
+      symbolCard__selected: id === activeSymbol,
+      symbolCard__notSelected: activeSymbol && id !== activeSymbol,
+      symbolCard__priceIncrease: previousPrice && price > previousPrice,
+      symbolCard__priceDecrease: previousPrice && price < previousPrice,
+      symbolCard__shakePriceIncrease: price > previousPrice && isBigPriceVariation,
+      symbolCard__shakePriceDecrease: price < previousPrice && isBigPriceVariation
+    });
+  }, [activeSymbol, price, previousPrice]);
+
   return (
-    <div
-      onClick={handleOnClick}
-      className={classNames('symbolCard', {
-        symbolCard__selected: id === activeSymbol,
-        symbolCard__notSelected: activeSymbol && id !== activeSymbol
-      })}
-    >
+    <div onClick={handleOnClick} className={symbolCardClasses}>
       <div className="symbolCard__header">
         {id}
         {trendIcon && <img src={trendIcon} alt="Trend arrow" />}
@@ -54,7 +74,9 @@ const SymbolCard = ({ id, price }: SymbolCardProps) => {
       <div className="symbolCard__details">
         <div className="symbolCard__details__price">
           <div>PRICE:</div>
-          <div className="symbolCard__details__price__value">{price ? `$${price}` : '$70'} </div>
+          <div className="symbolCard__details__price__value">
+            {price ? `$${formattedPrice}` : '-'}{' '}
+          </div>
         </div>
         {showCardInfo && (
           <>
