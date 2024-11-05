@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { debounce, DebouncedFunc } from 'lodash';
+import { useCallback, useEffect, useRef } from 'react';
 import { Line, LineChart, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 import Loading from '@/components/Loading';
@@ -8,14 +9,30 @@ import { selectActiveSymbol } from '@/store/dashboardOptionsSlice';
 import './priceChart.css';
 
 const PriceChart = () => {
+  const dispatch = useAppDispatch();
+  const debouncedFetchPriceHistoryRef = useRef<DebouncedFunc<(symbol: string) => void> | undefined>(
+    undefined
+  );
+
   const activeSymbol = useAppSelector(selectActiveSymbol);
 
-  const dispatch = useAppDispatch();
+  const debouncedFetchPriceHistory = useCallback(() => {
+    debouncedFetchPriceHistoryRef.current = debounce((symbol) => {
+      dispatch(fetchPriceHistory(symbol));
+    }, 500);
+  }, [dispatch]);
+
   useEffect(() => {
-    if (activeSymbol) {
-      dispatch(fetchPriceHistory(activeSymbol));
+    debouncedFetchPriceHistory();
+
+    if (activeSymbol && debouncedFetchPriceHistoryRef.current) {
+      debouncedFetchPriceHistoryRef.current(activeSymbol);
     }
-  }, [dispatch, activeSymbol]);
+
+    return () => {
+      if (debouncedFetchPriceHistoryRef.current) debouncedFetchPriceHistoryRef.current.cancel();
+    };
+  }, [activeSymbol, debouncedFetchPriceHistory]);
 
   const apiState = useAppSelector(selectors.apiState);
   const data = useAppSelector(selectors.selectPriceHistory);
